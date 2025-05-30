@@ -1,7 +1,5 @@
 package br.com.poo.modelo.auxiliares;
 
-import br.com.poo.modelo.Ingresso;
-
 public class Local {
 	public Endereco endereco;
 	public int capacidade;
@@ -13,7 +11,6 @@ public class Local {
 	
 	public void informarEndereco(String infoEndereco) {
 		String[] infosEndereco = infoEndereco.split(",");
-//		System.out.println(infosEndereco[0]);
 		this.endereco.pais = infosEndereco[0];
 		this.endereco.estado = infosEndereco[1];
 		this.endereco.cidade = infosEndereco[2];
