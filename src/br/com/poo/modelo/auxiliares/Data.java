@@ -1,15 +1,18 @@
 package br.com.poo.modelo.auxiliares;
 
 public class Data {
-	private int hora;
-	private int dia;
-	private int mes;
-	private int ano;
+	public int dia;
+	public int mes;
+	public int ano;
 	
-	public Data(int hora, int dia, int mes, int ano) {
-		this.hora = hora;
-		this.dia = dia;
-		this.mes = mes;
-		this.ano = ano;
+	public Data(String data) {
+		criarData(data);
+	}
+	
+	public void criarData(String data) {
+		String[] infosData = data.split("-");
+		this.dia = Integer.parseInt(infosData[0]);
+		this.mes = Integer.parseInt(infosData[1]);
+		this.ano = Integer.parseInt(infosData[2]);
 	}
 }

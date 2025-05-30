@@ -1,0 +1,32 @@
+{
+  "eventos": [
+    {
+      "nome": "Festival de Verão",
+      "data": "2025-07-10",
+      "hora": "18:00",
+      "artista": "Banda Solar",
+      "local": "Praça Central"
+    },
+    {
+      "nome": "Noite de Jazz",
+      "data": "2025-08-15",
+      "hora": "20:30",
+      "artista": "Carlos Lima Trio",
+      "local": "Teatro Municipal"
+    },
+    {
+      "nome": "Rock no Parque",
+      "data": "2025-09-05",
+      "hora": "19:00",
+      "artista": "Os Indomáveis",
+      "local": "Parque da Cidade"
+    },
+    {
+      "nome": "Samba da Madrugada",
+      "data": "2025-10-12",
+      "hora": "23:00",
+      "artista": "Grupo Raiz do Samba",
+      "local": "Clube do Samba"
+    }
+  ]
+}
