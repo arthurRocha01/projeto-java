@@ -1,8 +1,8 @@
 package br.com.poo.modelo.auxiliares;
 
 public class Hora {
-	private int hora;
-	private int minutos;
+	public int hora;
+	public int minutos;
 	
 	public Hora(String horario) {
 		criarHora(horario);
@@ -11,6 +11,6 @@ public class Hora {
 	public void criarHora(String horario) {
 		String[] infosHorario = horario.split(":");
 		this.hora = Integer.parseInt(infosHorario[0]);
-		this.hora = Integer.parseInt(infosHorario[1]);
+		this.minutos = Integer.parseInt(infosHorario[1]);
 	}
 }

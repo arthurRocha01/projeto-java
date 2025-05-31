@@ -18,9 +18,6 @@ public class Evento {
 	}
 	
 	public void informarLocal(String infoEndereco, int capacidade) {
-//		if (this == null) {
-//			throw new IllegalStateException("Crie o evento antes de informar o local.");
-//		}
 		Local novoLocal = new Local(infoEndereco, capacidade);
 		this.local = novoLocal;
 		this.local.informarEndereco(infoEndereco);
