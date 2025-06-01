@@ -14,16 +14,18 @@ public class Evento {
 	public Local local;
 	
 	public Evento() {
-		this.ingresso = new Ingresso();
+		this.ingresso = new Ingresso(); // Instancia sua classe filha ao ser instanciada.
 	}
 	
+	// Seta o local e capacidade do objeto Evento.
 	public void informarLocal(String infoEndereco, int capacidade) {
-		Local novoLocal = new Local(infoEndereco, capacidade);
+		Local novoLocal = new Local(infoEndereco, capacidade); // Instancia um objeto Local para o objeto passando seus dados;
 		this.local = novoLocal;
-		this.local.informarEndereco(infoEndereco);
 	}
 	
+	// Seta o valor do ingresso do objeto Evento.
 	public void informarValor(double valor) {
+		// Verifica se Ingresso existe no objeto.
 		if (this.ingresso == null) {
 			throw new IllegalStateException("Crie o evento antes de informar o valor.");
 		}

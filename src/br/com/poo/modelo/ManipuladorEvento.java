@@ -2,14 +2,13 @@ package br.com.poo.modelo;
 
 import br.com.poo.modelo.auxiliares.Data;
 import br.com.poo.modelo.auxiliares.Hora;
-import br.com.poo.ManipuladorListaEventos;
+import br.com.poo.ManipuladorListaEvento;
 import br.com.poo.modelo.auxiliares.Artista;
 
-public class ManipuladorShows {
+public class ManipuladorEvento {
 	public Evento evento;
-	public Evento[] listaEventos;
-	private ManipuladorListaEventos manipuladorListaEventos = new ManipuladorListaEventos();
 	
+	// Cria um Evento passando seus dados para suas determinadas classes.
 	public Evento criarEvento(String nome, String data, String horario, String artista) {
 		this.evento = new Evento();
 		this.evento.nome = nome;

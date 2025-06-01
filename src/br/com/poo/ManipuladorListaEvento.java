@@ -3,10 +3,12 @@ package br.com.poo;
 import java.util.Random;
 
 import br.com.poo.modelo.Evento;
-import br.com.poo.modelo.ManipuladorShows;
+import br.com.poo.modelo.ManipuladorEvento;
 
-public class ManipuladorListaEventos {
-	private Random rand = new Random();
+public class ManipuladorListaEvento {
+	private Random rand = new Random(); // Biblioteca com funções de randomização.
+	
+	// Dados para gerar eventos.
 	private String[] titulos = {"Jazz Night", "Rock in Rua", "Forró Fest", "Hip Hop Beats", "Clássicos ao Vivo", "Trap Brasil", "Indie Wave"};
     private String[] datas = {"10-09-2024", "12-11-2023", "25-06-2024", "01-01-2025", "05-08-2024", "18-09-2023"};
     private String[] horarios = {"18:30", "20:00", "19:30", "22:00", "21:15", "17:45"};
@@ -19,8 +21,9 @@ public class ManipuladorListaEventos {
         "Brasil,RS,Porto Alegre,Moinhos,Rua Padre Chagas,11"
     };
 	
+    // Cria uma lista de Evento com dados aleatórios.
 	public Evento[] gerarListaEventos(int numEventos) {
-		ManipuladorShows manipuladorShows = new ManipuladorShows();
+		ManipuladorEvento manipuladorEvento = new ManipuladorEvento();
 	    Evento[] listaEventos = new Evento[numEventos];
 
 	    for (int i = 0; i < listaEventos.length; i++) {
@@ -32,14 +35,14 @@ public class ManipuladorListaEventos {
 	        int capacidade = this.rand.nextInt(100) + 20;
 	        int valorIngresso = this.rand.nextInt(60) + 10;
 
-	        listaEventos[i] = manipuladorShows.criarEvento(titulo, data, horario, responsavel);
+	        listaEventos[i] = manipuladorEvento.criarEvento(titulo, data, horario, responsavel);
 	        listaEventos[i].informarValor(valorIngresso);
 	        listaEventos[i].informarLocal(endereco, capacidade);
 	    }
-	    
 	    return listaEventos;
 	}
 	
+	// Exibe uma ListaEvento.
 	public void listarEventos(Evento[] listaEventos) {
 		for (int i = 0; i < listaEventos.length; i++) {
 			System.out.println("========================================");
