@@ -4,8 +4,8 @@ public class Local {
 	public Endereco endereco;
 	public int capacidade;
 	
-	public Local(String infosEndereco, int capacidade) {
-		this.endereco = new Endereco(infosEndereco); // Instancia um classe filha Endereco ao ser instanciado.
-		this.capacidade = capacidade;
+	public Local(String infosEndereco, String capacidade) {
+		this.endereco = new Endereco(infosEndereco);
+		this.capacidade = Integer.parseInt(capacidade);
 	}
 }

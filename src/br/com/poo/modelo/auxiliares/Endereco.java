@@ -21,4 +21,10 @@ public class Endereco {
 		this.rua = infos[4];
 		this.numero = Integer.parseInt(infos[5]);
 	}
+	
+	public String toString() {
+		return String.format("%s,%s,%s,%s,%s,%d",
+				this.pais, this.estado, this.cidade,
+				this.bairro, this.rua, this.numero);
+	}
 }
