@@ -3,7 +3,7 @@ package br.com.poo.view.promotor;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import br.com.poo.controller.PromotorController;
+import br.com.poo.controller.Controller;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -21,11 +21,11 @@ public class TelaEditar extends JFrame {
 
     JTable table;
     DefaultTableModel tableModel;
-    PromotorController promotorController = new PromotorController();
+    Controller controller = new Controller();
 
-    public TelaEditar(JFrame parent, PromotorController promotorController, JTable table, DefaultTableModel tableModel) {
+    public TelaEditar(JFrame parent, Controller controller, JTable table, DefaultTableModel tableModel) {
         this.parent = parent;
-        this.promotorController = promotorController;
+        this.controller = controller;
         this.table = table;
         this.tableModel = tableModel;
 
@@ -126,7 +126,7 @@ public class TelaEditar extends JFrame {
         	    rua, numero, valor, capacidade
         	};
 
-        if (this.promotorController.verificarStringsVazias(fields) == 0) {
+        if (this.controller.verificarStringsVazias(fields) == 0) {
             JOptionPane.showMessageDialog(this, "Preencha todos os campos antes de salvar.");
             return;
         }
@@ -137,7 +137,7 @@ public class TelaEditar extends JFrame {
             return;
         }
         
-        this.promotorController.modificarEvento(tableModel, fields, eventoSelecionado);
+//        this.controller.modificarEvento(tableModel, fields, eventoSelecionado);
         this.dispose();
     }
 }

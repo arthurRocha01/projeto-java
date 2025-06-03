@@ -9,10 +9,10 @@ public class Endereco {
 	public int numero;
 	
 	public Endereco(String infosEndereco) {
-		informarEndereco(infosEndereco);
+		setEndereco(infosEndereco);
 	}
 	
-	private void informarEndereco(String infosEndereco) {
+	public void setEndereco(String infosEndereco) {
 		String[] infos = infosEndereco.split(",");
 		this.pais = infos[0];
 		this.estado = infos[1];

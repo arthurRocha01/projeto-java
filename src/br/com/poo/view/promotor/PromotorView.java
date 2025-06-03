@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import br.com.poo.controller.PromotorController;
+import br.com.poo.controller.Controller;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -16,7 +16,7 @@ public class PromotorView extends JFrame {
     private JTable table;
     private DefaultTableModel tableModel;
 
-    PromotorController promotorController = new PromotorController();
+    Controller controller = new Controller();
 
     public PromotorView() {
         super("Gerenciamento de Eventos");
@@ -83,18 +83,18 @@ public class PromotorView extends JFrame {
     }
 
     private void adicionar() {
-        TelaAdcionar telaAdcionar = new TelaAdcionar(this, this.promotorController);
+        TelaAdcionar telaAdcionar = new TelaAdcionar(this, this.controller);
         telaAdcionar.setVisible(true);
     }
     
     private void editar() {
-    	TelaEditar telaEditar = new TelaEditar(this, this.promotorController, this.table, this.tableModel);
+    	TelaEditar telaEditar = new TelaEditar(this, this.controller, this.table, this.tableModel);
     	telaEditar.setVisible(true);
     }
 
     public void atualizar() {
     	tableModel.setRowCount(0);
-        List<String[]> eventos = this.promotorController.pegarEventosCriados();
+        List<String[]> eventos = this.controller.pegarEventosCriados();
         for (String[] evento: eventos) {
         	tableModel.addRow(evento);
         }

@@ -1,4 +1,4 @@
-package br.com.poo.view;
+package br.com.poo.view.cliente;
 
 import javax.swing.*;
 import java.awt.*;

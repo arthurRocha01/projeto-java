@@ -8,4 +8,8 @@ public class Local {
 		this.endereco = new Endereco(infosEndereco);
 		this.capacidade = Integer.parseInt(capacidade);
 	}
+	
+	public void setCapacidade(String capacidade) {
+		this.capacidade = Integer.parseInt(capacidade.trim());
+	}
 }

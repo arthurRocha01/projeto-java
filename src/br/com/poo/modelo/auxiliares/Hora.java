@@ -5,10 +5,10 @@ public class Hora {
 	public int minutos;
 	
 	public Hora(String horario) {
-		criarHora(horario);
+		setHora(horario);
 	}
 	
-	public void criarHora(String horario) {
+	public void setHora(String horario) {
 		String[] infosHorario = horario.split(":");
 		this.hora = Integer.parseInt(infosHorario[0]);
 		this.minutos = Integer.parseInt(infosHorario[1]);

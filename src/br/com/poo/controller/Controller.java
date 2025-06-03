@@ -12,7 +12,7 @@ import br.com.poo.modelo.auxiliares.Artista;
 import br.com.poo.modelo.auxiliares.Data;
 import br.com.poo.modelo.auxiliares.Hora;
 
-public class PromotorController {
+public class Controller {
 
     public Evento evento;
     public ArrayList<Evento> listaEvento = new ArrayList<Evento>();
@@ -70,21 +70,33 @@ public class PromotorController {
     	return 1;
     }
     
-    public void modificarEvento(DefaultTableModel tableModel, String[] fields, int eventoSelecionado) {
-    	String data = fields[1] + "/" + fields[2] + "/" + fields[3];
-        String horario = fields[4] + ":" + fields[5];
-        String endereco = fields[7] + ", " + fields[8] + ", " + fields[9] + ", " + 
-        		fields[10] + ", " + fields[11] + ", Nº " + fields[12];
-        
-        if (verificarStringsVazias(fields) == 0) return;
-
-        tableModel.setValueAt(fields[0], eventoSelecionado, 0);
-        tableModel.setValueAt(data, eventoSelecionado, 1);
-        tableModel.setValueAt(horario, eventoSelecionado, 2);
-        tableModel.setValueAt(fields[6], eventoSelecionado, 3);
-        tableModel.setValueAt(endereco, eventoSelecionado, 4);
-        tableModel.setValueAt(fields[13], eventoSelecionado, 5);
-        tableModel.setValueAt(fields[14], eventoSelecionado, 6);
+//    public void modificarEvento(DefaultTableModel tableModel, String[] fields, int eventoSelecionado) {
+//    	String data = fields[1] + "/" + fields[2] + "/" + fields[3];
+//        String horario = fields[4] + ":" + fields[5];
+//        String endereco = fields[7] + ", " + fields[8] + ", " + fields[9] + ", " + 
+//        		fields[10] + ", " + fields[11] + ", Nº " + fields[12];
+//        
+//        if (verificarStringsVazias(fields) == 0) return;
+//
+//        tableModel.setValueAt(fields[0], eventoSelecionado, 0);
+//        tableModel.setValueAt(data, eventoSelecionado, 1);
+//        tableModel.setValueAt(horario, eventoSelecionado, 2);
+//        tableModel.setValueAt(fields[6], eventoSelecionado, 3);
+//        tableModel.setValueAt(endereco, eventoSelecionado, 4);
+//        tableModel.setValueAt(fields[13], eventoSelecionado, 5);
+//        tableModel.setValueAt(fields[14], eventoSelecionado, 6);
+//    }
+    
+    public void modificarEvento(String[] dadosEvento, int idEvento) {
+    	Evento evento = pegarEvento(idEvento);
+    	
+    	evento.nome = dadosEvento[0];
+    	evento.data.setData(dadosEvento[1]);
+    	evento.hora.setHora(dadosEvento[2]);
+    	evento.artista.nome = dadosEvento[3];
+    	evento.local.setCapacidade(dadosEvento[4]);
+    	evento.local.endereco.setEndereco(dadosEvento[5]);
+    	evento.ingresso.setValor(dadosEvento[6]);
     }
     
     public Evento pegarEvento(int id) {
@@ -106,5 +118,9 @@ public class PromotorController {
     		total += evento.ingresso.valor;
     	}
     	return total;
+    }
+    
+    public void apagarEvento(int idEvento) {
+    	this.listaEvento.remove(idEvento);
     }
 }

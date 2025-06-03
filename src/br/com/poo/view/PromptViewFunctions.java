@@ -6,80 +6,59 @@ import java.util.Scanner;
 import br.com.poo.modelo.Evento;
 
 public class PromptViewFunctions {
-	private Scanner scanner = new Scanner(System.in);
-	
-	private void limparTerminal() {
-	    System.out.print("\033[H\033[2J");
-	    System.out.flush();
-	}
-	
-	private void pausartela(int segundos) {
-		try {
-		    Thread.sleep((segundos * 1000));
-		} catch (InterruptedException e) {
-		    e.printStackTrace();
-		}
-	}
-	
-	public int inputOpcao(String label) {
-		System.out.printf("%s: ", label);
-		int input = this.scanner.nextInt();
-		return input;
-	}
-	
-	private void header(String header) {
-		System.out.println("========================================");
-	    System.out.printf("      ️  %s  ", header);
-	    System.out.println("========================================");
-	}
-	
-	public int menuSelecao(String nomeMenu, String[] opcoes, int isClean) {
-	    if (isClean != 1) limparTerminal();
+    private Scanner scanner = new Scanner(System.in);
 
-	    while (true) {
-	        header("MENU " + nomeMenu);
-	        for (int i = 0; i < opcoes.length; i++) System.out.printf("%d. %s\n", i + 1, opcoes[i]);
-	        System.out.printf("%d. Sair\n\n", opcoes.length + 1);
-	        System.out.print("Escolha uma opção: ");
+    private void limparTerminal() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
 
-	        if (scanner.hasNextInt()) {
-	            int opcao = scanner.nextInt();
-	            System.out.println();
+    private void pausartela(int segundos) {
+        try {
+            Thread.sleep((segundos * 1000));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-	            if (opcao == opcoes.length + 1) return -1;
-	            if (opcao >= 1 && opcao <= opcoes.length) return opcao;
+    public int inputOpcao(String label) {
+        System.out.printf("%s: ", label);
+        return this.scanner.nextInt();
+    }
 
-	            System.out.println("Opção inválida. Tente novamente.\n");
-	        } else {
-	            System.out.println("\nEntrada inválida. Digite um número.\n");
-	            scanner.next();
-	        }
-	    }
-	}
-	
-	public void telaEventoComprado(Evento evento) {
-		limparTerminal();
-	    header("EVENTO COMPRADO");
-	    System.out.printf("Evento: %s\n", evento.nome);
-	    System.out.printf("Data: %02d-%02d-%04d\n", evento.data.dia, evento.data.mes, evento.data.ano);
-	    System.out.printf("Horário: %02d:%02d\n", evento.hora.hora, evento.hora.minutos);
-	    System.out.printf("Responsável: %s, %d anos\n", evento.artista.nome, evento.artista.idade);
-	    System.out.printf("Local: %s, %s, %s, %s, %s, nº %d\n",
-	        evento.local.endereco.pais,
-	        evento.local.endereco.estado,
-	        evento.local.endereco.cidade,
-	        evento.local.endereco.bairro,
-	        evento.local.endereco.rua,
-	        evento.local.endereco.numero);
-	    System.out.printf("Capacidade: %d pessoas\n", evento.local.capacidade);
-	    System.out.printf("Valor Pago: R$ %.2f\n", evento.ingresso.valor);
-	    System.out.println("========================================");
-	    System.out.println("💡 Leve este comprovante com você!");
-	    System.out.println("========================================\n");
-	    pausartela(4);
-	}
-	
-	public int confirmarAcao(String mensagem) {
+    private void header(String header) {
+        System.out.println("========================================");
+        System.out.println(header.toUpperCase());
+        System.out.println("========================================");
+    }
+
+    public int menuSelecao(String nomeMenu, String[] opcoes, int isClean) {
+        if (isClean == 1) limparTerminal();
+
+        header("Menu " + nomeMenu);
+        for (int i = 0; i < opcoes.length; i++) {
+            System.out.printf("%d. %s\n", i + 1, opcoes[i]);
+        }
+        System.out.printf("0. Sair\n\n");
+        
+        while (true) {
+        	System.out.print("Escolha uma opção: ");
+            if (scanner.hasNextInt()) {
+                int opcao = scanner.nextInt();
+                System.out.println();
+                
+                if (opcao == 0) return -1;
+                if (opcao >= 1 && opcao <= opcoes.length) return opcao;
+
+                System.out.println("Opção inválida. Tente novamente.\n");
+            } else {
+                System.out.println("Entrada inválida. Digite um número.\n");
+                scanner.next();
+            }
+        }
+    }
+    
+    public int confirmarAcao(String mensagem) {
         Scanner scanner = new Scanner(System.in);
         String resposta;
 
@@ -97,68 +76,96 @@ public class PromptViewFunctions {
             }
         }
     }
-	
-	public void listarEvento(Evento evento, int isClean) {
-		if (isClean == 1) limparTerminal();
-		
-		System.out.println("========================================");
-		System.out.printf("ID: %s\n", evento.id);
-		
-		System.out.printf("Título: %s\n", evento.nome);
 
-		System.out.printf("Data: %02d-%02d-%04d\n", 
-		    evento.data.dia, 
-		    evento.data.mes, 
-		    evento.data.ano);
+    public void telaEventoComprado(Evento evento) {
+        limparTerminal();
+        header("Evento Comprado");
 
-		System.out.printf("Horário: %02d:%02d\n", 
-		    evento.hora.hora, 
-		    evento.hora.minutos);
+        System.out.printf("Evento: %s\n", evento.nome);
+        System.out.printf("Data: %02d-%02d-%04d\n", evento.data.dia, evento.data.mes, evento.data.ano);
+        System.out.printf("Horário: %02d:%02d\n", evento.hora.hora, evento.hora.minutos);
+        System.out.printf("Responsável: %s (%d anos)\n", evento.artista.nome, evento.artista.idade);
+        System.out.println("Local:");
+        System.out.printf("  %s, %s, %s, %s\n  %s, nº %d\n",
+            evento.local.endereco.cidade,
+            evento.local.endereco.estado,
+            evento.local.endereco.pais,
+            evento.local.endereco.bairro,
+            evento.local.endereco.rua,
+            evento.local.endereco.numero
+        );
+        System.out.printf("Capacidade: %d pessoas\n", evento.local.capacidade);
+        System.out.printf("Valor Pago: R$ %.2f\n", evento.ingresso.valor);
 
-		System.out.printf("Responsável: %s, %d anos\n",
-		    evento.artista.nome,
-		    evento.artista.idade);
+        System.out.println("========================================");
+        System.out.println("Leve este comprovante com você.");
+        System.out.println("========================================\n");
+        pausartela(4);
+    }
 
-		System.out.printf("Valor do Ingresso: R$ %.2f\n", 
-		    evento.ingresso.valor);
+    public void listarEvento(Evento evento, int isClean) {
+        if (isClean == 1) limparTerminal();
 
-		System.out.printf("Local: %s, %s, %s, %s, %s, nº %d\n", 
-		    evento.local.endereco.pais,
-		    evento.local.endereco.estado,
-		    evento.local.endereco.cidade,
-		    evento.local.endereco.bairro,
-		    evento.local.endereco.rua,
-		    evento.local.endereco.numero);
+        System.out.println("========================================");
+        System.out.printf("ID: %s\n", evento.id);
+        System.out.printf("Título: %s\n", evento.nome);
+        System.out.printf("Data: %02d-%02d-%04d\n", evento.data.dia, evento.data.mes, evento.data.ano);
+        System.out.printf("Horário: %02d:%02d\n", evento.hora.hora, evento.hora.minutos);
+        System.out.printf("Responsável: %s (%d anos)\n", evento.artista.nome, evento.artista.idade);
+        System.out.printf("Valor do Ingresso: R$ %.2f\n", evento.ingresso.valor);
+        System.out.println("Local:");
+        System.out.printf("  %s, %s, %s, %s\n  %s, nº %d\n",
+            evento.local.endereco.cidade,
+            evento.local.endereco.estado,
+            evento.local.endereco.pais,
+            evento.local.endereco.bairro,
+            evento.local.endereco.rua,
+            evento.local.endereco.numero
+        );
+        System.out.printf("Capacidade: %d pessoas\n", evento.local.capacidade);
+        System.out.println("========================================\n");
+    }
 
-		System.out.printf("Capacidade: %d pessoas\n", 
-		    evento.local.capacidade);
+    public void listarEventos(List<Evento> listaEventos) {
+        limparTerminal();
+        header("Eventos Disponíveis");
+        for (Evento evento : listaEventos) {
+            listarEvento(evento, 0);
+        }
+        pausartela(1);
+    }
 
-		System.out.println("========================================\n");
-	}
-	
-	public void listarEventos(List<Evento> listaEventos) {
-		limparTerminal();
-	    for (int i = 0; i < listaEventos.size(); i++) {
-	    	Evento evento = listaEventos.get(i);
-	        listarEvento(evento, 0);
-	    }
-	}
-	
-	public void telaCarrinho(List<Evento> carrinho, double valorTotal) {
-	    limparTerminal();
-	    header("CARRINHO DE COMPRAS");
+    public void telaCarrinho(List<Evento> carrinho, double valorTotal) {
+        limparTerminal();
+        header("Carrinho de Compras");
 
-	    if (carrinho.isEmpty()) {
-	        System.out.println("🛒 Seu carrinho está vazio.\n");
-	        pausartela(2);
-	        return;
-	    }
+        if (carrinho.isEmpty()) {
+            System.out.println("Seu carrinho está vazio.\n");
+            pausartela(2);
+            return;
+        }
 
-	    listarEventos(carrinho);
+        listarEventos(carrinho);
+        System.out.printf("Total: R$ %.2f\n", valorTotal);
+        System.out.println("========================================\n");
+        pausartela(4);
+    }
+    
+    public String[] pegarEntradas(String[] campos) {
+        String[] respostas = new String[campos.length];
+        scanner.nextLine();
 
-	    System.out.printf("💰 Total: R$ %.2f\n", valorTotal);
-	    System.out.println("========================================\n");
-	    pausartela(4);
-	}
+        for (int i = 0; i < campos.length; i++) {
+            System.out.printf("%s: ", campos[i]);
+            respostas[i] = scanner.nextLine().trim();
+        }
 
+        return respostas;
+    }
+    
+    public int pegarID() {
+    	System.out.print("ID: ");
+    	int id = scanner.nextInt();
+    	return id;
+    }
 }

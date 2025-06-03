@@ -6,10 +6,10 @@ public class Data {
 	public int ano;
 	
 	public Data(String data) {
-		criarData(data);
+		setData(data);
 	}
 	
-	public void criarData(String data) {
+	public void setData(String data) {
 		String[] infosData = data.split("-");
 		this.dia = Integer.parseInt(infosData[0]);
 		this.mes = Integer.parseInt(infosData[1]);

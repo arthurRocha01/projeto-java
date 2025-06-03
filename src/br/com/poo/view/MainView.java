@@ -2,17 +2,20 @@ package br.com.poo.view;
 
 import javax.swing.*;
 
-import br.com.poo.controller.PromotorController;
+import br.com.poo.controller.Controller;
+import br.com.poo.view.cliente.ClientViewPrompt;
+import br.com.poo.view.cliente.ClienteView;
 import br.com.poo.view.promotor.PromotorView;
+import br.com.poo.view.promotor.PromotorViewPrompt;
 
 import java.awt.event.*;
 
 public class MainView extends JFrame {
 	private PromptViewFunctions promptViewFunctions = new PromptViewFunctions();
-	public PromotorController promotorController = new PromotorController();
+	public Controller controller;
 	
-	public MainView() {
-		
+	public MainView(Controller controller) {
+		this.controller = controller;
 	}
 	
 	public void GUI() {
@@ -39,7 +42,8 @@ public class MainView extends JFrame {
 		String[] opcoes = {
 				"Promotor", "Cliente"
 		};
-		int opcaoSelecionada = this.promptViewFunctions.menuSelecao("INCIAL", opcoes, 0);
-		if (opcaoSelecionada == 1) new ClientViewPrompt(promotorController);
+		int opcaoSelecionada = this.promptViewFunctions.menuSelecao("INCIAL", opcoes, 1);
+		if (opcaoSelecionada == 1) new PromotorViewPrompt(this.controller);
+		if (opcaoSelecionada == 2) new ClientViewPrompt(this.controller);
 	}
 }

@@ -21,7 +21,7 @@ public class ManipuladorListaEvento {
         "Brasil,RS,Porto Alegre,Moinhos,Rua Padre Chagas,11"
     };
 	
-	public void gerarListaEventos(PromotorController controller, int numEventos) {
+	public void gerarListaEventos(Controller controller, int numEventos) {
 	    for (int i = 0; i < numEventos; i++) {
 	        String nome = titulos[this.rand.nextInt(titulos.length)];
 	        String data = datas[this.rand.nextInt(datas.length)];

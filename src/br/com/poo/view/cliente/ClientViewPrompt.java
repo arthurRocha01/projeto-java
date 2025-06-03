@@ -1,13 +1,14 @@
-package br.com.poo.view;
+package br.com.poo.view.cliente;
 
-import br.com.poo.controller.PromotorController;
+import br.com.poo.controller.Controller;
 import br.com.poo.modelo.Evento;
+import br.com.poo.view.PromptViewFunctions;
 
 public class ClientViewPrompt {
-	private PromotorController controller;
+	private Controller controller;
 	private PromptViewFunctions promptViewFunctions = new PromptViewFunctions();
 	
-	public ClientViewPrompt(PromotorController controller) {
+	public ClientViewPrompt(Controller controller) {
 		this.controller = controller;
 		iniciarCliente() ;
 	}
@@ -15,7 +16,7 @@ public class ClientViewPrompt {
 	private void iniciarCliente() {
 		exibirEventos();
 		String[] opcoes = { "Selecionar Evento", "Ver Carrinho" };
-		int opc = this.promptViewFunctions.menuSelecao("PROMOTOR", opcoes, 1);
+		int opc = this.promptViewFunctions.menuSelecao("PROMOTOR", opcoes, 0);
 		if (opc == 1) selecionarEvento();
 		if (opc == 2) exibirCarrinho();
 	}

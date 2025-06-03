@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import br.com.poo.controller.ManipuladorListaEvento;
-import br.com.poo.controller.PromotorController;
+import br.com.poo.controller.Controller;
 import br.com.poo.modelo.Evento;
 import br.com.poo.modelo.auxiliares.Artista;
 
@@ -13,11 +13,11 @@ public class TelaAdcionar extends JDialog {
     private JTextField nomeField, dataField, horarioField, artistaField, localField, valorField, capacidadeField;
     private JButton salvarButton, cancelarButton;
     private ManipuladorListaEvento display = new ManipuladorListaEvento();
-    public PromotorController promotorController;
+    public Controller controller;
 
-    public TelaAdcionar(JFrame parent, PromotorController promotorController) {
+    public TelaAdcionar(JFrame parent, Controller controller) {
         super(parent, "Adicionar Evento", true);
-        this.promotorController = promotorController;
+        this.controller = controller;
         setLayout(new BorderLayout(10, 10));
         JPanel formPanel = new JPanel(new GridBagLayout());
         formPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -90,6 +90,6 @@ public class TelaAdcionar extends JDialog {
         String capacidade = capacidadeField.getText().trim();
         String valor = valorField.getText().trim();
 
-        this.promotorController.criarEvento(nome, data, horario, artista, infoEndereco, capacidade, valor);
+        this.controller.criarEvento(nome, data, horario, artista, infoEndereco, capacidade, valor);
     }
 }
