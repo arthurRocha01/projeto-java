@@ -6,6 +6,7 @@ import br.com.poo.modelo.auxiliares.Hora;
 import br.com.poo.modelo.auxiliares.Local;
 
 public class Evento {
+	public int id;
 	public Ingresso ingresso;
 	public String nome;
 	public Data data;

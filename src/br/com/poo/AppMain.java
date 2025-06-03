@@ -1,9 +1,9 @@
 package br.com.poo;
 
 import br.com.poo.controller.AppController;
+import br.com.poo.controller.ManipuladorListaEvento;
 import br.com.poo.controller.PromotorController;
 import br.com.poo.modelo.Evento;
-import br.com.poo.modelo.ManipuladorListaEvento;
 
 public class AppMain {
 //	private ManipuladorEvento manipuladorEvento = new ManipuladorEvento();
@@ -12,6 +12,7 @@ public class AppMain {
 	
 	public static void main(String[] args) {
 		AppController app = new AppController();
+		app.iniciarPrompt();
 //		app.gerarEventosManual();
 //		app.gerEventosAutomatico(3);
 //		MainView viewApp = new MainView();

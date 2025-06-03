@@ -21,16 +21,13 @@ public class PromotorView extends JFrame {
     public PromotorView() {
         super("Gerenciamento de Eventos");
 
-        // Campo de texto
         nomeField = new JTextField(20);
 
-        // Botões
         addButton = new JButton("Adicionar");
         editButton = new JButton("Editar");
         updateButton = new JButton("Atualizar");
         deleteButton = new JButton("Excluir");
 
-        // Tabela
         String[] colunas = {
             "Nome do Evento", "Data", "Horário", "Artista", "Endereço", "Capacidade", "Valor"
         };
@@ -38,7 +35,7 @@ public class PromotorView extends JFrame {
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Impede edição direta na tabela
+                return false;
             }
         };
 
@@ -51,12 +48,10 @@ public class PromotorView extends JFrame {
 
         JScrollPane scrollPane = new JScrollPane(table);
 
-        // Ajuste das larguras mínimas das colunas
         TableColumnModel columnModel = table.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(120); // Nome
-        columnModel.getColumn(4).setPreferredWidth(200); // Endereço
+        columnModel.getColumn(0).setPreferredWidth(120);
+        columnModel.getColumn(4).setPreferredWidth(200);
 
-        // Painel de entrada
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         inputPanel.add(new JLabel("Nome:"));
@@ -65,8 +60,7 @@ public class PromotorView extends JFrame {
         inputPanel.add(editButton);
         inputPanel.add(updateButton);
         inputPanel.add(deleteButton);
-
-        // Eventos
+        
         addButton.addActionListener(e -> adicionar());
         editButton.addActionListener(e -> editar());
         updateButton.addActionListener(e -> atualizar());
@@ -74,11 +68,10 @@ public class PromotorView extends JFrame {
         table.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int row = table.getSelectedRow();
-                nomeField.setText(tableModel.getValueAt(row, 0).toString()); // Corrigido: coluna 0 é o nome
+                nomeField.setText(tableModel.getValueAt(row, 0).toString());
             }
         });
-
-        // Layout principal
+        
         setLayout(new BorderLayout(10, 10));
         add(inputPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);

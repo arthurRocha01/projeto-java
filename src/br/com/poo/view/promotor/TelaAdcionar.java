@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import br.com.poo.controller.ManipuladorListaEvento;
 import br.com.poo.controller.PromotorController;
 import br.com.poo.modelo.Evento;
-import br.com.poo.modelo.ManipuladorListaEvento;
 import br.com.poo.modelo.auxiliares.Artista;
 
 public class TelaAdcionar extends JDialog {
