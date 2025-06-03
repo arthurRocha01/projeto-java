@@ -9,7 +9,7 @@ public class ClientViewPrompt {
 	
 	public ClientViewPrompt(PromotorController controller) {
 		this.controller = controller;
-		iniciarCliente();
+		iniciarCliente() ;
 	}
 	
 	private void iniciarCliente() {
@@ -17,6 +17,7 @@ public class ClientViewPrompt {
 		String[] opcoes = { "Selecionar Evento", "Ver Carrinho" };
 		int opc = this.promptViewFunctions.menuSelecao("PROMOTOR", opcoes, 1);
 		if (opc == 1) selecionarEvento();
+		if (opc == 2) exibirCarrinho();
 	}
 
 	private void exibirEventos() {
@@ -29,9 +30,8 @@ public class ClientViewPrompt {
 	private void selecionarEvento() {
 		int idEventoSelecionado = this.promptViewFunctions.inputOpcao("ID do Evento");
 		Evento eventoSelecionado = this.controller.pegarEvento(idEventoSelecionado);
-		this.promptViewFunctions.listarEvento(eventoSelecionado);
+		this.promptViewFunctions.listarEvento(eventoSelecionado, 1);
 		String[] opcoes = { "Comprar" };
-		this.promptViewFunctions.listarEvento(eventoSelecionado);
 		int opc = this.promptViewFunctions.menuSelecao("EVENTO", opcoes, 1);
 		if (opc == 1) comprarEvento(eventoSelecionado);
 	}
@@ -40,7 +40,14 @@ public class ClientViewPrompt {
 	private void comprarEvento(Evento evento) {
 		if (this.promptViewFunctions.confirmarAcao("Deseja comprar o evento?") == 1) {
 			this.promptViewFunctions.telaEventoComprado(evento);
+			this.controller.adcionarEventoCarrinho(evento);
 		}
-		else iniciarCliente();
+		iniciarCliente();
+	}
+	
+	private void exibirCarrinho() {
+		double valorTotal = this.controller.pegarTotalCarrinho();
+		this.promptViewFunctions.telaCarrinho(controller.carrinho, valorTotal);
+		iniciarCliente();
 	}
 }

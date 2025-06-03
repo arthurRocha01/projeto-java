@@ -98,4 +98,13 @@ public class PromotorController {
     public void adcionarEventoCarrinho(Evento evento) {
     	this.carrinho.add(evento);
     }
+    
+    public double pegarTotalCarrinho() {
+    	double total = 0;
+    	for (int i = 0; i < this.carrinho.size(); i++) {
+    		Evento evento = carrinho.get(i);
+    		total += evento.ingresso.valor;
+    	}
+    	return total;
+    }
 }
