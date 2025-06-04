@@ -12,7 +12,7 @@ import br.com.poo.view.promotor.PromotorViewPrompt;
 
 public class MainView extends JFrame {
 	private PromptViewFunctions promptViewFunctions = new PromptViewFunctions();
-	private GUIViewFunctions guiViewFunciontios = new GUIViewFunctions();
+	private GUIViewFunctions guiViewFunciontios = new GUIViewFunctions(this);
 	public Controller controller;
 	
 	public MainView(Controller controller) {
@@ -23,11 +23,13 @@ public class MainView extends JFrame {
 		int [] size = { 300, 150 };
 		this.guiViewFunciontios.criarTela("Sistema de Eventos", size);
 
-        JButton btnPromotor = new JButton("Acesso Promotor");
-        JButton btnCliente = new JButton("Acesso Cliente");
+        JButton btnPromotor = this.guiViewFunciontios.criarButton("Acesso Promotor");
+        JButton btnCliente = this.guiViewFunciontios.criarButton("Acesso Cliente");
         
         List<JComponent> componentes = Arrays.asList(btnPromotor, btnCliente);
-        this.guiViewFunciontios.criarPainel(componentes);
+        JPanel painel = this.guiViewFunciontios.criarPainel(componentes);
+        add(painel);
+        setVisible(true);
 
         btnPromotor.addActionListener(e -> new PromotorView(this.controller, guiViewFunciontios));
 //        btnCliente.addActionListener(e -> new ClienteView());

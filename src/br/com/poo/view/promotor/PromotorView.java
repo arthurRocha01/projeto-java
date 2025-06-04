@@ -20,11 +20,12 @@ public class PromotorView extends JFrame {
     private DefaultTableModel tableModel;
 
     Controller controller = new Controller();
-    GUIViewFunctions guiViewFunction = new GUIViewFunctions();
+    GUIViewFunctions guiViewFunction;;
 
     public PromotorView(Controller controller, GUIViewFunctions guiViewFunctions) {
     	this.controller = controller;
-//    	this.guiViewFunction = guiViewFunctions;
+    	this.guiViewFunction = guiViewFunctions;
+    	this.guiViewFunction.trocarWindowPai(this);
     	
     	int[] size = { 900, 400 };
     	this.guiViewFunction.criarTela("Promotor", size);
@@ -41,7 +42,9 @@ public class PromotorView extends JFrame {
 
         
         List<JComponent> componentes = Arrays.asList(nomeField, addButton, editButton, deleteButton);
-        this.guiViewFunction.criarPainel(componentes);
+        JPanel painel = this.guiViewFunction.criarPainel(componentes);
+        add(painel);
+        setVisible(true);
         
         addButton.addActionListener(e -> adicionar());
         editButton.addActionListener(e -> editar());

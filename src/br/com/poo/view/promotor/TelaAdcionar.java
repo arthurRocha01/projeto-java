@@ -17,11 +17,12 @@ public class TelaAdcionar extends JDialog {
     private JButton salvarButton, cancelarButton;
     private ManipuladorListaEvento display = new ManipuladorListaEvento();
     public Controller controller;
-    GUIViewFunctions guiViewFunctions = new GUIViewFunctions();
-
+    GUIViewFunctions guiViewFunctions;
+    
     public TelaAdcionar(JFrame parent, Controller controller, GUIViewFunctions guiViewFunctions) {
     	super(parent, "Adicionar Evento", true);
         this.controller = controller;
+        this.guiViewFunctions.trocarWindowPai(this);
 
         nomeField = new JTextField(20);
         nomeField.setText("test");
@@ -38,21 +39,23 @@ public class TelaAdcionar extends JDialog {
         capacidadeField = new JTextField(20);
         capacidadeField.setText("12");
         
-        List<JComponent> componentes = Arrays.asList(nomeField, dataField, horarioField, artistaField, localField, valorField, capacidadeField);
+        List<JComponent> componentesForm = Arrays.asList(nomeField, dataField, horarioField, artistaField, localField, valorField, capacidadeField);
         String[] labels = {
         		"Nome", "Data", "Hora", "Artista", "Local", "Valor", "Capacidade"
         };
-        JPanel form = this.guiViewFunctions.criarForm(componentes, labels);
+        JPanel form = this.guiViewFunctions.criarForm(componentesForm, labels);
         add(form);
 
-        // Botões
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        salvarButton = new JButton("Salvar");
-        cancelarButton = new JButton("Cancelar");
+        salvarButton = this.guiViewFunctions.criarButton("Salvar");
+        cancelarButton = this.guiViewFunctions.criarButton("Cancelar");
+        List<JComponent> componentesPainel = Arrays.asList(salvarButton, cancelarButton);
+        JPanel buttonPanel = this.guiViewFunctions.criarPainel(componentesPainel);
+        add(buttonPanel);
+        setVisible(true);
 
         salvarButton.addActionListener(e -> salvar());
         cancelarButton.addActionListener(e -> dispose());
-
+        
         buttonPanel.add(salvarButton);
         buttonPanel.add(cancelarButton);
 
