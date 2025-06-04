@@ -1,11 +1,10 @@
 package br.com.poo.view.promotor;
 
-import javax.swing.*;
+import javax.swing.*; 
 import javax.swing.table.DefaultTableModel;
 
 import br.com.poo.controller.Controller;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class TelaEditar extends JFrame {
     JFrame parent;

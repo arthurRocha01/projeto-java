@@ -1,89 +1,54 @@
 package br.com.poo.view.promotor;
 
-import javax.swing.*;
+import javax.swing.*; 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 import br.com.poo.controller.Controller;
+import br.com.poo.view.GUIViewFunctions;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle.Control;
 
 public class PromotorView extends JFrame {
     private JTextField nomeField;
-    private JButton addButton, editButton, updateButton, deleteButton;
+    private JButton addButton, editButton, deleteButton;
     private JTable table;
     private DefaultTableModel tableModel;
 
     Controller controller = new Controller();
+    GUIViewFunctions guiViewFunction = new GUIViewFunctions();
 
-    public PromotorView() {
-        super("Gerenciamento de Eventos");
+    public PromotorView(Controller controller, GUIViewFunctions guiViewFunctions) {
+    	this.controller = controller;
+//    	this.guiViewFunction = guiViewFunctions;
+    	
+    	int[] size = { 900, 400 };
+    	this.guiViewFunction.criarTela("Promotor", size);
 
-        nomeField = new JTextField(20);
-
-        addButton = new JButton("Adicionar");
-        editButton = new JButton("Editar");
-        updateButton = new JButton("Atualizar");
-        deleteButton = new JButton("Excluir");
+        nomeField = this.guiViewFunction.criarCampo(20);
+        addButton = this.guiViewFunction.criarButton("Adcionar");
+        editButton = this.guiViewFunction.criarButton("Editar");
+        deleteButton = this.guiViewFunction.criarButton("Excluir");
 
         String[] colunas = {
             "Nome do Evento", "Data", "Horário", "Artista", "Endereço", "Capacidade", "Valor"
         };
+        this.guiViewFunction.criarTabelaEventos(colunas);
 
-        tableModel = new DefaultTableModel(colunas, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        table = new JTable(tableModel);
-        table.setFillsViewportHeight(true);
-        table.setRowHeight(25);
-        table.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 13));
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-
-        JScrollPane scrollPane = new JScrollPane(table);
-
-        TableColumnModel columnModel = table.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(120);
-        columnModel.getColumn(4).setPreferredWidth(200);
-
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        inputPanel.add(new JLabel("Nome:"));
-        inputPanel.add(nomeField);
-        inputPanel.add(addButton);
-        inputPanel.add(editButton);
-        inputPanel.add(updateButton);
-        inputPanel.add(deleteButton);
+        
+        List<JComponent> componentes = Arrays.asList(nomeField, addButton, editButton, deleteButton);
+        this.guiViewFunction.criarPainel(componentes);
         
         addButton.addActionListener(e -> adicionar());
         editButton.addActionListener(e -> editar());
-        updateButton.addActionListener(e -> atualizar());
-
-        table.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                int row = table.getSelectedRow();
-                nomeField.setText(tableModel.getValueAt(row, 0).toString());
-            }
-        });
-        
-        setLayout(new BorderLayout(10, 10));
-        add(inputPanel, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
-
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(900, 400);
-        setLocationRelativeTo(null);
-        setVisible(true);
     }
 
     private void adicionar() {
-        TelaAdcionar telaAdcionar = new TelaAdcionar(this, this.controller);
+        TelaAdcionar telaAdcionar = new TelaAdcionar(this, this.controller, guiViewFunction);
         telaAdcionar.setVisible(true);
     }
     

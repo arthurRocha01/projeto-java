@@ -1,6 +1,6 @@
 package br.com.poo.view.cliente;
 
-import br.com.poo.controller.Controller;
+import br.com.poo.controller.Controller; 
 import br.com.poo.modelo.Evento;
 import br.com.poo.view.PromptViewFunctions;
 
@@ -22,7 +22,7 @@ public class ClientViewPrompt {
 	}
 
 	private void exibirEventos() {
-		this.controller.manipuladorListaEvento.gerarListaEventos(controller, 5);
+//		this.controller.manipuladorListaEvento.gerarListaEventos(controller, 5);
 		this.promptViewFunctions.listarEventos(
 				this.controller.listaEvento
 		);

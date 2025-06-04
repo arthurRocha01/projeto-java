@@ -10,7 +10,7 @@ public class Data {
 	}
 	
 	public void setData(String data) {
-		String[] infosData = data.split("-");
+		String[] infosData = data.split("/");
 		this.dia = Integer.parseInt(infosData[0]);
 		this.mes = Integer.parseInt(infosData[1]);
 		this.ano = Integer.parseInt(infosData[2]);

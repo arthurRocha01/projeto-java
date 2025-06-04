@@ -5,7 +5,7 @@ import br.com.poo.view.promotor.PromotorViewPrompt;
 
 public class AppController {
 	public Controller controller = new Controller();
-	private MainView app = new MainView(controller);
+	private MainView app = new MainView(this.controller);
 	
 	public void iniciarGUI() {
 		this.app.GUI();

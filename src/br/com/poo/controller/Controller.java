@@ -21,8 +21,7 @@ public class Controller {
     
     public ManipuladorListaEvento manipuladorListaEvento = new ManipuladorListaEvento();
 
-    public void criarEvento(String nome, String data, String horario, String artista,
-                              String infoEndereco, String capacidade, String valor) {
+    public void criarEvento(String nome, String data, String horario, String artista, String infoEndereco, String capacidade, String valor) {
         this.evento = new Evento();
         this.evento.id = id++;
         this.evento.nome = nome;
@@ -44,12 +43,10 @@ public class Controller {
                     evento.data.dia, evento.data.mes, evento.data.ano);
             String horario = String.format("%02d:%02d",
                     evento.hora.hora, evento.hora.minutos);
-            String artista = String.format("%s, %d anos",
-                    evento.artista.nome, evento.artista.idade);
-            String endereco = String.format("%s, %s, %s, %s, nº %d",
-                    evento.local.endereco.pais,
+            String artista = String.format("%s",
+                    evento.artista.nome);
+            String endereco = String.format("%s, %s, nº %d",
                     evento.local.endereco.cidade,
-                    evento.local.endereco.bairro,
                     evento.local.endereco.rua,
                     evento.local.endereco.numero);
             String capacidade = String.valueOf(evento.local.capacidade);

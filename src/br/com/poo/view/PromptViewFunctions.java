@@ -30,6 +30,7 @@ public class PromptViewFunctions {
         System.out.println("========================================");
         System.out.println(header.toUpperCase());
         System.out.println("========================================");
+        System.out.printf("\n\n");
     }
 
     public int menuSelecao(String nomeMenu, String[] opcoes, int isClean) {
@@ -59,7 +60,6 @@ public class PromptViewFunctions {
     }
     
     public int confirmarAcao(String mensagem) {
-        Scanner scanner = new Scanner(System.in);
         String resposta;
 
         while (true) {
@@ -72,7 +72,7 @@ public class PromptViewFunctions {
             } else if (resposta.equals("n") || resposta.equals("nao") || resposta.equals("não")) {
                 return 0;
             } else {
-                System.out.println("⚠️  Resposta inválida. Digite 's' para sim ou 'n' para não.\n");
+                System.out.println("Resposta inválida. Digite 's' para sim ou 'n' para não.\n");
             }
         }
     }
@@ -84,13 +84,10 @@ public class PromptViewFunctions {
         System.out.printf("Evento: %s\n", evento.nome);
         System.out.printf("Data: %02d-%02d-%04d\n", evento.data.dia, evento.data.mes, evento.data.ano);
         System.out.printf("Horário: %02d:%02d\n", evento.hora.hora, evento.hora.minutos);
-        System.out.printf("Responsável: %s (%d anos)\n", evento.artista.nome, evento.artista.idade);
+        System.out.printf("Responsável: %s\n", evento.artista.nome);
         System.out.println("Local:");
-        System.out.printf("  %s, %s, %s, %s\n  %s, nº %d\n",
+        System.out.printf("  %s, %s, nº %d\n",
             evento.local.endereco.cidade,
-            evento.local.endereco.estado,
-            evento.local.endereco.pais,
-            evento.local.endereco.bairro,
             evento.local.endereco.rua,
             evento.local.endereco.numero
         );
@@ -111,14 +108,11 @@ public class PromptViewFunctions {
         System.out.printf("Título: %s\n", evento.nome);
         System.out.printf("Data: %02d-%02d-%04d\n", evento.data.dia, evento.data.mes, evento.data.ano);
         System.out.printf("Horário: %02d:%02d\n", evento.hora.hora, evento.hora.minutos);
-        System.out.printf("Responsável: %s (%d anos)\n", evento.artista.nome, evento.artista.idade);
+        System.out.printf("Responsável: %s\n", evento.artista.nome);
         System.out.printf("Valor do Ingresso: R$ %.2f\n", evento.ingresso.valor);
         System.out.println("Local:");
-        System.out.printf("  %s, %s, %s, %s\n  %s, nº %d\n",
+        System.out.printf("  %s, %s, nº %d\n",
             evento.local.endereco.cidade,
-            evento.local.endereco.estado,
-            evento.local.endereco.pais,
-            evento.local.endereco.bairro,
             evento.local.endereco.rua,
             evento.local.endereco.numero
         );
@@ -152,15 +146,43 @@ public class PromptViewFunctions {
     }
     
     public String[] pegarEntradas(String[] campos) {
-        String[] respostas = new String[campos.length];
-        scanner.nextLine();
+    	Scanner scanner = new Scanner(System.in);
+    	String[] respostas = new String[campos.length];
 
-        for (int i = 0; i < campos.length; i++) {
-            System.out.printf("%s: ", campos[i]);
-            respostas[i] = scanner.nextLine().trim();
-        }
+    	for (int i = 0; i < campos.length; i++) {
+    		String campo = campos[i];
 
-        return respostas;
+    		switch (campo) {
+    			case "Data" -> {
+    				String dia = lerLinha(scanner, "Dia: ");
+    				String mes = lerLinha(scanner, "Mês: ");
+    				String ano = lerLinha(scanner, "Ano: ");
+    				respostas[i] = dia + "/" + mes + "/" + ano;
+    			}
+    			case "Horário" -> {
+    				String hora = lerLinha(scanner, "Hora: ");
+    				String minuto = lerLinha(scanner, "Minuto: ");
+    				respostas[i] = hora + ":" + minuto;
+    			}
+    			case "Endereço" -> {
+    				String cidade = lerLinha(scanner, "Cidade: ");
+    				String rua = lerLinha(scanner, "Rua: ");
+    				String numero = lerLinha(scanner, "Número: ");
+    				respostas[i] = rua + "," + numero + "," + cidade;
+    			}
+    			default -> {
+    				respostas[i] = lerLinha(scanner, campo + ": ");
+    			}
+    		}
+    	}
+
+    	return respostas;
+    }
+
+    private String lerLinha(Scanner scanner, String label) {
+    	System.out.print(label);
+    	String entrada = scanner.nextLine().trim();
+    	return entrada.isEmpty() ? "-" : entrada;
     }
     
     public int pegarID() {
