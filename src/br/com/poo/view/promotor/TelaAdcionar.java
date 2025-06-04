@@ -18,10 +18,13 @@ public class TelaAdcionar extends JDialog {
     private ManipuladorListaEvento display = new ManipuladorListaEvento();
     public Controller controller;
     GUIViewFunctions guiViewFunctions;
+    JFrame parent;
     
     public TelaAdcionar(JFrame parent, Controller controller, GUIViewFunctions guiViewFunctions) {
     	super(parent, "Adicionar Evento", true);
+    	this.parent = parent;
         this.controller = controller;
+        this.guiViewFunctions = guiViewFunctions;
         this.guiViewFunctions.trocarWindowPai(this);
 
         nomeField = new JTextField(20);
@@ -44,28 +47,24 @@ public class TelaAdcionar extends JDialog {
         		"Nome", "Data", "Hora", "Artista", "Local", "Valor", "Capacidade"
         };
         JPanel form = this.guiViewFunctions.criarForm(componentesForm, labels);
-        add(form);
-
         salvarButton = this.guiViewFunctions.criarButton("Salvar");
-        cancelarButton = this.guiViewFunctions.criarButton("Cancelar");
+        cancelarButton = this.guiViewFunctions.criarButton("Cancelar");        
         List<JComponent> componentesPainel = Arrays.asList(salvarButton, cancelarButton);
         JPanel buttonPanel = this.guiViewFunctions.criarPainel(componentesPainel);
-        add(buttonPanel);
-        setVisible(true);
-
+        
+        setLayout(new BorderLayout());
+        add(form, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);       
+        
+        buttonPanel.add(cancelarButton);
+        buttonPanel.add(salvarButton);
+        
         salvarButton.addActionListener(e -> salvar());
         cancelarButton.addActionListener(e -> dispose());
         
-        buttonPanel.add(salvarButton);
-        buttonPanel.add(cancelarButton);
-
-        // Adiciona ao layout principal
-//        add(formPanel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
-
-        setSize(420, 400);
-        setResizable(false);
-        setLocationRelativeTo(parent);
+        pack();
+        setLocationRelativeTo(this.parent);
+        setVisible(true);
     }
 
     private void salvar() {
@@ -78,5 +77,6 @@ public class TelaAdcionar extends JDialog {
         String valor = valorField.getText().trim();
 
         this.controller.criarEvento(nome, data, horario, artista, infoEndereco, capacidade, valor);
+        dispose();
     }
 }

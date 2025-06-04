@@ -6,7 +6,7 @@ public class AppMain {
 	
 	public static void main(String[] args) {
 		AppController app = new AppController();
-//		app.iniciarPrompt();
-		app.iniciarGUI();
+		app.iniciarPrompt();
+//		app.iniciarGUI();
 	}
 }

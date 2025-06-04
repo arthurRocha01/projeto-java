@@ -15,4 +15,9 @@ public class Endereco {
 		this.rua = infos[1];
 		this.numero = Integer.parseInt(infos[2]);
 	}
+	
+	public String getEndereco() {
+		String endereco = String.format("%s, %s, n° %d", this.cidade, this.rua, this.numero);
+		return endereco;
+	}
 }

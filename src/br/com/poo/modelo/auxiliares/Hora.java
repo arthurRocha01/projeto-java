@@ -13,4 +13,9 @@ public class Hora {
 		this.hora = Integer.parseInt(infosHorario[0]);
 		this.minutos = Integer.parseInt(infosHorario[1]);
 	}
+	
+	public String getHora() {
+		String horario = String.format("%d:%d", this.hora, this.minutos);
+		return horario;
+	}
 }

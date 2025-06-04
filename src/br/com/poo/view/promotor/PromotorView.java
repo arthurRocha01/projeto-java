@@ -38,7 +38,14 @@ public class PromotorView extends JFrame {
         String[] colunas = {
             "Nome do Evento", "Data", "Horário", "Artista", "Endereço", "Capacidade", "Valor"
         };
-        this.guiViewFunction.criarTabelaEventos(colunas);
+       this.tableModel = new DefaultTableModel(colunas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        JTable tabela = new JTable(tableModel);
 
         
         List<JComponent> componentes = Arrays.asList(nomeField, addButton, editButton, deleteButton);

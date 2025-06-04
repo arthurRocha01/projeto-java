@@ -15,4 +15,9 @@ public class Data {
 		this.mes = Integer.parseInt(infosData[1]);
 		this.ano = Integer.parseInt(infosData[2]);
 	}
+	
+	public String getData() {
+		String data = String.format("%d/%d/%d", this.dia, this.mes, this.ano);
+		return data;
+	}
 }

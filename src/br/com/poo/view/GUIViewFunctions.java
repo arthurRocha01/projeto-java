@@ -5,6 +5,9 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+
+import br.com.poo.modelo.Evento;
 
 public class GUIViewFunctions {
     private Window parent;
@@ -86,15 +89,7 @@ public class GUIViewFunctions {
         return new JTextField(size);
     }
 
-    public JScrollPane criarTabelaEventos(String[] colunas) {
-        DefaultTableModel tableModel = new DefaultTableModel(colunas, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        JTable tabela = new JTable(tableModel);
+    public JScrollPane criarTabelaEventos(JTable tabela, String[] colunas) {
         tabela.setFillsViewportHeight(true);
         tabela.setRowHeight(25);
         tabela.setFont(new Font("SansSerif", Font.PLAIN, 13));
@@ -108,4 +103,25 @@ public class GUIViewFunctions {
 
         return new JScrollPane(tabela);
     }
+    
+    private String[] extrairDadosEvento(Evento evento) {
+    	String id = Integer.toString(evento.id);
+    	String nome = evento.nome;
+    	String data = evento.data.getData();
+    	String horario = evento.hora.getHora();
+    	String artista = evento.artista.nome;
+    	String endereco = evento.local.endereco.getEndereco();
+    	String capacidade = Integer.toString(evento.local.capacidade);
+    	String valor = Double.toString(evento.ingresso.valor);
+    	
+    	return new String[] { id, nome, data, horario, artista, endereco, capacidade, valor };
+    }
+    
+//    public void adcionarEventoTabela(JFrame parent, TableModel tableModel, List<Evento> listaEvento) {
+//    	for (int i = 0; i < listaEvento.size(); i++) {
+//    		Evento evento = listaEvento.get(i);
+//    		String[] dadosEvento = extrairDadosEvento(evento);
+//    		tableModel.
+//    	}
+//    }
 }
