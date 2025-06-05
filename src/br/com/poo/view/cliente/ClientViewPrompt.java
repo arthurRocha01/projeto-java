@@ -1,54 +1,61 @@
 package br.com.poo.view.cliente;
 
-import br.com.poo.controller.Controller; 
+import br.com.poo.controller.Controller;
 import br.com.poo.modelo.Evento;
-import br.com.poo.view.PromptViewFunctions;
 
 public class ClientViewPrompt {
-	private Controller controller;
-	private PromptViewFunctions promptViewFunctions = new PromptViewFunctions();
-	
-//	public ClientViewPrompt(Controller controller) {
-//		this.controller = controller;
-//		iniciarCliente() ;
-//	}
-//	
-//	private void iniciarCliente() {
-//		exibirEventos();
-//		String[] opcoes = { "Selecionar Evento", "Ver Carrinho" };
-//		int opc = this.promptViewFunctions.menuSelecao("PROMOTOR", opcoes, 0);
-//		if (opc == 1) selecionarEvento();
-//		if (opc == 2) exibirCarrinho();
-//	}
-//
-//	private void exibirEventos() {
-////		this.controller.manipuladorListaEvento.gerarListaEventos(controller, 5);
-//		this.promptViewFunctions.listarEventos(
-//				this.controller.listaEvento
-//		);
-//	}
-//
-//	private void selecionarEvento() {
-//		int idEventoSelecionado = this.promptViewFunctions.inputOpcao("ID do Evento");
-//		Evento eventoSelecionado = this.controller.pegarEvento(idEventoSelecionado);
-//		this.promptViewFunctions.listarEvento(eventoSelecionado, 1);
-//		String[] opcoes = { "Comprar" };
-//		int opc = this.promptViewFunctions.menuSelecao("EVENTO", opcoes, 1);
-//		if (opc == 1) comprarEvento(eventoSelecionado);
-//	}
-//	
-//	
-//	private void comprarEvento(Evento evento) {
-//		if (this.promptViewFunctions.confirmarAcao("Deseja comprar o evento?") == 1) {
-//			this.promptViewFunctions.telaEventoComprado(evento);
-//			this.controller.adcionarEventoCarrinho(evento);
-//		}
-//		iniciarCliente();
-//	}
-//	
-//	private void exibirCarrinho() {
-//		double valorTotal = this.controller.pegarTotalCarrinho();
-//		this.promptViewFunctions.telaCarrinho(controller.carrinho, valorTotal);
-//		iniciarCliente();
-//	}
+
+    private Controller controller;
+    private ClienteViewPromptFunctions display = new ClienteViewPromptFunctions();
+
+    public ClientViewPrompt(Controller controller) {
+        this.controller = controller;
+        iniciarCliente();
+    }
+
+    private void iniciarCliente() {
+        exibirEventos();
+
+        String[] opcoes = { "Selecionar Evento", "Ver Carrinho" };
+        int opcao = display.viewFunctions.menuSelecao("Promotor", opcoes, 0);
+
+        switch (opcao) {
+            case 1 -> selecionarEvento();
+            case 2 -> exibirCarrinho();
+        }
+    }
+
+    private void exibirEventos() {
+        display.viewFunctions.listarEventos(controller.listaEvento);
+    }
+
+    private void selecionarEvento() {
+        int idEvento = display.pegarIdEvento("ID do Evento");
+        Evento evento = controller.pegarEvento(idEvento);
+
+        display.viewFunctions.listarEvento(evento, 1);
+        exibirMenuEvento(evento);
+    }
+
+    private void exibirMenuEvento(Evento evento) {
+        String[] opcoes = { "Ver mais...", "Comprar" };
+        int opcao = display.viewFunctions.menuSelecao("Evento", opcoes, 1);
+
+        if (opcao == 1) comprarEvento(evento);
+    }
+
+    private void comprarEvento(Evento evento) {
+        int confirmacao = display.viewFunctions.confirmarAcao("Deseja comprar o evento?");
+        if (confirmacao == 1) {
+            controller.adcionarEventoCarrinho(evento);
+            display.exibirComprovanteCompra(evento);
+        }
+        iniciarCliente();
+    }
+
+    private void exibirCarrinho() {
+        double total = controller.pegarTotalCarrinho();
+        display.exibirCarrinhoDeEventos(controller.listaEvento, total);
+        iniciarCliente();
+    }
 }

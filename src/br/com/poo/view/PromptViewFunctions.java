@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Scanner;
 
 import br.com.poo.modelo.Evento;
-import br.com.poo.modelo.auxiliares.Data;
-import br.com.poo.modelo.auxiliares.Endereco;
-import br.com.poo.modelo.auxiliares.Hora;
 
 public class PromptViewFunctions {
     private Scanner scanner = new Scanner(System.in);
+    
+    private final int larguraTotal = 50;
+    private final String separador = "+" + "=".repeat(larguraTotal - 2) + "+";
+    private final String linhaSimples = "+" + "-".repeat(larguraTotal - 2) + "+";
 
     public int pegarInt() {
         while (!scanner.hasNextInt()) {
@@ -55,12 +56,12 @@ public class PromptViewFunctions {
         return pegarApenasNumerosELetras(label);
     }
 
-    private void limparTerminal() {
+    public void limparTerminal() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-    private void pausartela(int segundos) {
+    public void pausartela(int segundos) {
         try {
             Thread.sleep(segundos * 1000);
         } catch (InterruptedException e) {
@@ -76,8 +77,8 @@ public class PromptViewFunctions {
         System.out.printf("%-12s: %s\n", label, value);
     }
 
-    public void exibirInfo(String label, int value) {
-        System.out.printf("%-12s: %d\n", label, value);
+    private void exibirInfo(String rotulo, Object valor) {
+        System.out.printf("| %-15s: %-"+(larguraTotal - 20)+"s |\n", rotulo, valor);
     }
 
     public int menuSelecao(String nomeMenu, String[] opcoes, int isClean) {
@@ -87,40 +88,38 @@ public class PromptViewFunctions {
         for (int i = 0; i < opcoes.length; i++) {
             System.out.printf("%d. %s\n", i + 1, opcoes[i]);
         }
-        exibirMensagem("0. Sair\n");
-        System.out.print("Escolha uma opção: ");
+        exibirMensagem("0. Sair");
+        System.out.print("\nEscolha uma opção: ");
         return pegarInt();
-    }
-
-    private String fragmentarDado(Object object) {
-        if (object instanceof Data data) return String.format("%02d/%02d/%04d", data.dia, data.mes, data.ano);
-        if (object instanceof Hora hora) return String.format("%02d:%02d", hora.hora, hora.minutos);
-        if (object instanceof Endereco endereco)
-            return String.format("%s - %s, Nº %d", endereco.cidade, endereco.rua, endereco.numero);
-        return object.toString();
     }
 
     public void listarEvento(Evento evento, int isClean) {
         if (isClean == 1) limparTerminal();
 
-        System.out.println("+---------------------------------------+");
+        System.out.println(linhaSimples);
         exibirInfo("ID", evento.id);
         exibirInfo("Nome", evento.nome);
-        exibirInfo("Data", fragmentarDado(evento.data));
-        exibirInfo("Horário", fragmentarDado(evento.hora));
+        exibirInfo("Data", evento.data.getData());
+        exibirInfo("Horário", evento.hora.getHora());
         exibirInfo("Artista", evento.artista.nome);
-        exibirInfo("Endereço", fragmentarDado(evento.local.endereco));
+        exibirInfo("Endereço", evento.local.endereco.getEndereco());
         exibirInfo("Capacidade", evento.local.capacidade);
         exibirInfo("Valor", String.format("R$ %.2f", evento.ingresso.valor));
-        System.out.println("+---------------------------------------+\n");
+        System.out.println(linhaSimples + "\n");
+    }
+    
+    public void exibirFaixa() {
+        System.out.println(separador);
     }
 
     public void exibirHeader(String header) {
-        System.out.println("========================================");
-        System.out.println(header.toUpperCase());
-        System.out.println("========================================\n");
+        System.out.println();
+        exibirFaixa();
+        System.out.printf("| %-"+(larguraTotal - 4)+"s |\n", header.toUpperCase());
+        exibirFaixa();
+        System.out.println();
     }
-
+    
     public void listarEventos(List<Evento> listaEventos) {
         limparTerminal();
         exibirHeader("Eventos Disponíveis");
@@ -129,14 +128,36 @@ public class PromptViewFunctions {
             listarEvento(evento, 0);
         }
 
+        exibirFaixa();
+        System.out.println();
         pausartela(1);
+    }
+    
+    private int verificarAcao(String mensagem) {
+        System.out.println();
+        exibirFaixa();
+        System.out.printf("| %-"+(larguraTotal - 4)+"s |\n", mensagem + " (s/n)");
+        exibirFaixa();
+        System.out.print("> ");
+        String input = scanner.nextLine().trim().toLowerCase();
+
+        if (input.equals("s") || input.equals("sim")) return 1;
+        if (input.equals("n") || input.equals("nao") || input.equals("não")) return 0;
+
+        exibirMensagem("Resposta inválida. Digite 's' para sim ou 'n' para não.");
+        return verificarAcao(mensagem);
+    }
+
+    public int confirmarAcao(String mensagem) {
+        return verificarAcao(mensagem);
     }
 
     private int verificarTipoNumero(String tipo) {
         String[] tiposNumeros = {
             "Dia", "Mês", "Ano",
             "Hora", "Minuto",
-            "Número", "Capacidade", "Valor"
+            "Número", "Capacidade", "Valor",
+            "ID"
         };
         for (String tipoNum : tiposNumeros) {
             if (tipo.equalsIgnoreCase(tipoNum)) return 1;
@@ -144,7 +165,7 @@ public class PromptViewFunctions {
         return 0;
     }
 
-    public String lerLinha(String label) {
+    public String pegarLinha(String label) {
         exibirLabel(label);
         if (verificarTipoNumero(label) == 1) return pegarApenasNumeros(label);
         return pegarApenasNumerosELetras(label);
@@ -157,23 +178,23 @@ public class PromptViewFunctions {
             String campo = campos[i];
             switch (campo) {
                 case "Data" -> {
-                    String dia = lerLinha("Dia");
-                    String mes = lerLinha("Mês");
-                    String ano = lerLinha("Ano");
+                    String dia = pegarLinha("Dia");
+                    String mes = pegarLinha("Mês");
+                    String ano = pegarLinha("Ano");
                     inputs[i] = dia + "/" + mes + "/" + ano;
                 }
                 case "Horário" -> {
-                    String hora = lerLinha("Hora");
-                    String minuto = lerLinha("Minuto");
+                    String hora = pegarLinha("Hora");
+                    String minuto = pegarLinha("Minuto");
                     inputs[i] = hora + ":" + minuto;
                 }
                 case "Endereço" -> {
-                    String cidade = lerLinha("Cidade");
-                    String rua = lerLinha("Rua");
-                    String numero = lerLinha("Número");
+                    String cidade = pegarLinha("Cidade");
+                    String rua = pegarLinha("Rua");
+                    String numero = pegarLinha("Número");
                     inputs[i] = cidade + "," + rua + "," + numero;
                 }
-                default -> inputs[i] = lerLinha(campo);
+                default -> inputs[i] = pegarLinha(campo);
             }
         }
 

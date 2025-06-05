@@ -43,7 +43,7 @@ public class MainView extends JFrame {
 		while(true) {
 			int opcaoSelecionada = this.promptViewFunctions.menuSelecao("INCIAL", opcoes, 1);
 			if (opcaoSelecionada == 1) new PromotorViewPrompt(this.controller);
-//			if (opcaoSelecionada == 2) new ClientViewPrompt(this.controller);
+			if (opcaoSelecionada == 2) new ClientViewPrompt(this.controller);
 		}
 	}
 }

@@ -4,7 +4,7 @@ import br.com.poo.controller.Controller;
 
 public class PromotorViewPrompt {
     private Controller controller;
-    private PromotorViewPromptFunctions display = new PromotorViewPromptFunctions();
+    private PromotorViewPromptFunctions viewFunctions = new PromotorViewPromptFunctions();
 
     private String[] campos = {
         "Nome", "Data", "Horário", "Artista", "Endereço", "Capacidade", "Valor"
@@ -21,7 +21,7 @@ public class PromotorViewPrompt {
 
     private void menuCRUD(int isClean) {
         String[] opcoes = { "Criar", "Ler", "Editar", "Excluir" };
-        int opc = display.viewFunctions.menuSelecao("CRUD", opcoes, isClean);
+        int opc = viewFunctions.viewFunctions.menuSelecao("CRUD", opcoes, isClean);
 
         switch (opc) {
             case 1 -> create();
@@ -32,11 +32,11 @@ public class PromotorViewPrompt {
     }
 
     private String[] obterValores() {
-        return display.viewFunctions.pegarEntradas(campos);
+        return viewFunctions.viewFunctions.pegarEntradas(campos);
     }
 
     private void confirmarNovaExecucao() {
-        int opc = display.confirmarAcao("Deseja criar um novo evento?");
+        int opc = this.viewFunctions.viewFunctions.confirmarAcao("Deseja criar um novo evento?");
         if (opc == 1) create();
         else menuCRUD(1);
     }
@@ -51,19 +51,19 @@ public class PromotorViewPrompt {
     }
 
     private void read() {
-        display.viewFunctions.listarEventos(controller.listaEvento);
+        viewFunctions.viewFunctions.listarEventos(controller.listaEvento);
         menuCRUD(0);
     }
 
     private void update() {
-        int idEvento = display.pegarID();
+        int idEvento = viewFunctions.pegarID();
         String[] entradas = obterValores();
         controller.modificarEvento(entradas, idEvento);
         menuCRUD(1);
     }
 
     private void delete() {
-        int idEvento = display.pegarID();
+        int idEvento = viewFunctions.pegarID();
         controller.apagarEvento(idEvento);
         menuCRUD(1);
     }
