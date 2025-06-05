@@ -1,71 +1,70 @@
 package br.com.poo.view.promotor;
 
 import br.com.poo.controller.Controller;
-import br.com.poo.view.PromptViewFunctions;
 
 public class PromotorViewPrompt {
-	private Controller controller;
-	private PromptViewFunctions promptViewFunctions = new PromptViewFunctions();
-	private PromotorViewPromptFunctiions display = new PromotorViewPromptFunctiions();
-	private String[] campos = {
-		    "Nome", "Data", "Horário", "Artista", "Endereço", "Capacidade", "Valor"
-	};
-	
-	public PromotorViewPrompt(Controller controller) {
-		this.controller = controller;
-		inciarPromotor();
-	}
-	
-	private void inciarPromotor() {
-		menuCRUD(1);
-	}
-	
-	private void menuCRUD(int isClean) {
-		String[] opcoes = {
-				"Criar", "Ler", "Editar", "Excluir"
-		};
-//		int opc = this.promptViewFunctions.menuSelecao("CRUD", opcoes, isClean);
-		int opc = this.display.menuSelecao("CRUD", opcoes, isClean);
-		switch(opc) {
-		case 1 -> create();
-		case 2 -> read();
-		case 3 -> update();
-		case 4 -> delete();
-		}
-	}
-	
-	private void create() {
-		String[] entradas = pegarCamposEvento();
-		this.controller.criarEvento(entradas[0], entradas[1], entradas[2], entradas[3],
-				entradas[4], entradas[5], entradas[6]);
-//		int opc = this.promptViewFunctions.confirmarAcao("Deseja criar um novo evento?");
-		int opc = this.display.confirmarAcao("Deseja criar um novo evento?");
-		if (opc == 1) create();
-		if (opc == 0) menuCRUD(1);
-	}
-	
-	private void read() {
-//		this.promptViewFunctions.listarEventos(this.controller.listaEvento);
-		this.display.listarEventos(this.controller.listaEvento);
-		menuCRUD(0);
-	}
-	
-	private String[] pegarCamposEvento() {
-		String[] entradas = this.promptViewFunctions.pegarEntradas(this.campos);
-		return entradas;
-	}
-	
-	private void update() {
-		int idEvento = this.promptViewFunctions.pegarID();
-		String[] entradas = pegarCamposEvento();
-		System.out.println("test");
-		this.controller.modificarEvento(entradas, idEvento);
-		menuCRUD(0);
-	}
-	
-	private void delete() {
-		int idEvento = this.promptViewFunctions.pegarID();
-		this.controller.apagarEvento(idEvento);
-		menuCRUD(0);
-	}
+    private Controller controller;
+    private PromotorViewPromptFunctions display = new PromotorViewPromptFunctions();
+
+    private String[] campos = {
+        "Nome", "Data", "Horário", "Artista", "Endereço", "Capacidade", "Valor"
+    };
+
+    public PromotorViewPrompt(Controller controller) {
+        this.controller = controller;
+        iniciarPromotor();
+    }
+
+    private void iniciarPromotor() {
+        menuCRUD(1);
+    }
+
+    private void menuCRUD(int isClean) {
+        String[] opcoes = { "Criar", "Ler", "Editar", "Excluir" };
+        int opc = display.viewFunctions.menuSelecao("CRUD", opcoes, isClean);
+
+        switch (opc) {
+            case 1 -> create();
+            case 2 -> read();
+            case 3 -> update();
+            case 4 -> delete();
+        }
+    }
+
+    private String[] obterValores() {
+        return display.viewFunctions.pegarEntradas(campos);
+    }
+
+    private void confirmarNovaExecucao() {
+        int opc = display.confirmarAcao("Deseja criar um novo evento?");
+        if (opc == 1) create();
+        else menuCRUD(1);
+    }
+
+    private void create() {
+        String[] entradas = obterValores();
+        controller.criarEvento(
+            entradas[0], entradas[1], entradas[2],
+            entradas[3], entradas[4], entradas[5], entradas[6]
+        );
+        confirmarNovaExecucao();
+    }
+
+    private void read() {
+        display.viewFunctions.listarEventos(controller.listaEvento);
+        menuCRUD(0);
+    }
+
+    private void update() {
+        int idEvento = display.pegarID();
+        String[] entradas = obterValores();
+        controller.modificarEvento(entradas, idEvento);
+        menuCRUD(1);
+    }
+
+    private void delete() {
+        int idEvento = display.pegarID();
+        controller.apagarEvento(idEvento);
+        menuCRUD(1);
+    }
 }
