@@ -1,7 +1,6 @@
 package br.com.poo.controller;
 
-import br.com.poo.view.MainView;
-import br.com.poo.view.promotor.PromotorViewPrompt;
+import br.com.poo.view.MainView; 
 
 public class AppController {
 	public Controller controller = new Controller();

@@ -104,7 +104,7 @@ public class PromptViewFunctions {
         exibirInfo("Artista", evento.artista.nome);
         exibirInfo("Endereço", evento.local.endereco.getEndereco());
         exibirInfo("Capacidade", evento.local.capacidade);
-        exibirInfo("Valor", String.format("R$ %.2f", evento.ingresso.valor));
+        exibirInfo("Valor", evento.ingresso.getValor());
         System.out.println(linhaSimples + "\n");
     }
     

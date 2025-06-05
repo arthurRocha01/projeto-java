@@ -1,17 +1,12 @@
 package br.com.poo.view.promotor;
 
-import javax.swing.*; 
+import javax.swing.*;  
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-
 import br.com.poo.controller.Controller;
 import br.com.poo.view.GUIViewFunctions;
 
-import java.awt.*;
-import java.awt.event.*;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle.Control;
 
 public class PromotorView extends JFrame {
     private JTextField nomeField;

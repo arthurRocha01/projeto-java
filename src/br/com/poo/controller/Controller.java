@@ -1,11 +1,8 @@
 package br.com.poo.controller;
 
-import java.text.DecimalFormat;
+import java.text.DecimalFormat; 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
-import javax.swing.table.DefaultTableModel;
 
 import br.com.poo.modelo.Evento;
 import br.com.poo.modelo.auxiliares.Artista;
