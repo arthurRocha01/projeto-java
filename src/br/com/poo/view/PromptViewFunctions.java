@@ -50,7 +50,7 @@ public class PromptViewFunctions {
 
     private String pegarApenasNumerosELetras(String label) {
         String entrada = scanner.nextLine().trim();
-        if (entrada.matches("[a-zA-Z0-9]+")) return entrada;
+        if (entrada.matches("[a-zA-Z0-9\s]+")) return entrada;
         exibirMensagem("Entrada inválida. Apenas letras e números.");
         exibirLabel(label);
         return pegarApenasNumerosELetras(label);
