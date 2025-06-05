@@ -4,7 +4,7 @@ import br.com.poo.controller.Controller;
 
 public class PromotorViewPrompt {
     private Controller controller;
-    private PromotorViewPromptFunctions viewFunctions = new PromotorViewPromptFunctions();
+    private PromotorViewPromptFunctions display = new PromotorViewPromptFunctions();
 
     private String[] campos = {
         "Nome", "Data", "Horário", "Artista", "Endereço", "Capacidade", "Valor"
@@ -21,7 +21,7 @@ public class PromotorViewPrompt {
 
     private void menuCRUD(int isClean) {
         String[] opcoes = { "Criar", "Ler", "Editar", "Excluir" };
-        int opc = viewFunctions.viewFunctions.menuSelecao("CRUD", opcoes, isClean);
+        int opc = this.display.viewFunctions.menuSelecao("PROMOTOR", opcoes, isClean);
 
         switch (opc) {
             case 1 -> create();
@@ -32,11 +32,11 @@ public class PromotorViewPrompt {
     }
 
     private String[] obterValores() {
-        return viewFunctions.viewFunctions.pegarEntradas(campos);
+        return this.display.viewFunctions.pegarEntradas(campos);
     }
 
     private void confirmarNovaExecucao() {
-        int opc = this.viewFunctions.viewFunctions.confirmarAcao("Deseja criar um novo evento?");
+        int opc = this.display.viewFunctions.confirmarAcao("Deseja criar um novo evento?");
         if (opc == 1) create();
         else menuCRUD(1);
     }
@@ -50,20 +50,27 @@ public class PromotorViewPrompt {
         confirmarNovaExecucao();
     }
 
+    private void exibirEventos() {
+    	this.display.viewFunctions.limparTerminal();
+    	this.display.viewFunctions.listarEventos(controller.listaEvento);
+    }
+
     private void read() {
-        viewFunctions.viewFunctions.listarEventos(controller.listaEvento);
+    	exibirEventos();
         menuCRUD(0);
     }
 
     private void update() {
-        int idEvento = viewFunctions.pegarID();
+    	exibirEventos();
+        int idEvento = display.pegarID();
         String[] entradas = obterValores();
         controller.modificarEvento(entradas, idEvento);
         menuCRUD(1);
     }
 
     private void delete() {
-        int idEvento = viewFunctions.pegarID();
+    	exibirEventos();
+        int idEvento = display.pegarID();
         controller.apagarEvento(idEvento);
         menuCRUD(1);
     }

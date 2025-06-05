@@ -17,7 +17,7 @@ public class ClientViewPrompt {
         exibirEventos();
 
         String[] opcoes = { "Selecionar Evento", "Ver Carrinho" };
-        int opcao = display.viewFunctions.menuSelecao("Promotor", opcoes, 0);
+        int opcao = display.viewFunctions.menuSelecao("Cliente", opcoes, 0);
 
         switch (opcao) {
             case 1 -> selecionarEvento();
@@ -26,10 +26,12 @@ public class ClientViewPrompt {
     }
 
     private void exibirEventos() {
-        display.viewFunctions.listarEventos(controller.listaEvento);
+    	this.display.viewFunctions.limparTerminal();
+        this.display.viewFunctions.listarEventos(controller.listaEvento);
     }
 
     private void selecionarEvento() {
+    	exibirEventos();
         int idEvento = display.pegarIdEvento("ID do Evento");
         Evento evento = controller.pegarEvento(idEvento);
 
@@ -37,20 +39,22 @@ public class ClientViewPrompt {
         exibirMenuEvento(evento);
     }
 
-    private void exibirMenuEvento(Evento evento) {
-        String[] opcoes = { "Ver mais...", "Comprar" };
-        int opcao = display.viewFunctions.menuSelecao("Evento", opcoes, 1);
-
-        if (opcao == 1) comprarEvento(evento);
+    private void comprarEvento(Evento evento) {
+    	this.display.viewFunctions.listarEvento(evento, 1);
+    	int confirmacao = display.viewFunctions.confirmarAcao("Deseja comprar o evento?");
+    	if (confirmacao == 1) {
+    		controller.adcionarEventoCarrinho(evento);
+    		display.exibirComprovanteCompra(evento);
+    	}
+    	iniciarCliente();
     }
 
-    private void comprarEvento(Evento evento) {
-        int confirmacao = display.viewFunctions.confirmarAcao("Deseja comprar o evento?");
-        if (confirmacao == 1) {
-            controller.adcionarEventoCarrinho(evento);
-            display.exibirComprovanteCompra(evento);
-        }
-        iniciarCliente();
+    private void exibirMenuEvento(Evento evento) {
+    	this.display.viewFunctions.listarEvento(evento, 1);
+        String[] opcoes = { "Comprar" };
+        int opcao = display.viewFunctions.menuSelecao("Evento", opcoes, 0);
+
+        if (opcao == 1) comprarEvento(evento);
     }
 
     private void exibirCarrinho() {

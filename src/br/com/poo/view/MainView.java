@@ -44,6 +44,8 @@ public class MainView extends JFrame {
 			int opcaoSelecionada = this.promptViewFunctions.menuSelecao("INCIAL", opcoes, 1);
 			if (opcaoSelecionada == 1) new PromotorViewPrompt(this.controller);
 			if (opcaoSelecionada == 2) new ClientViewPrompt(this.controller);
+			break;
 		}
+		this.promptViewFunctions.exibirTelaSaida();
 	}
 }

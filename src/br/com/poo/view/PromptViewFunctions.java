@@ -197,7 +197,21 @@ public class PromptViewFunctions {
                 default -> inputs[i] = pegarLinha(campo);
             }
         }
-
+        
+        pausartela(2);
         return inputs;
     }
+    
+    public void exibirTelaSaida() {
+        final int larguraTotal = 50;
+        String borda = "+" + "=".repeat(larguraTotal - 2) + "+";
+        
+        System.out.println();
+        System.out.println(borda);
+        System.out.printf("| %-"+(larguraTotal - 4)+"s |\n", "Obrigado por usar o sistema!");
+        System.out.printf("| %-"+(larguraTotal - 4)+"s |\n", "Volte sempre :)");
+        System.out.println(borda);
+        System.out.println();
+    }
+
 }
